@@ -5,37 +5,49 @@ services:
     image: redis/redis-stack-server:7.2.0-v6
     volumes:
       - ./resources/config/redis.conf:/usr/local/etc/redis/redis.conf
-    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf", "--port", "7001" ]
+    ports:
+      - "7001:7001"
 
   redis-main-2:
     image: redis/redis-stack-server:7.2.0-v6
     volumes:
       - ./resources/config/redis.conf:/usr/local/etc/redis/redis.conf
-    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf", "--port", "7002" ]
+    ports:
+      - "7002:7002"
 
   redis-main-3:
     image: redis/redis-stack-server:7.2.0-v6
     volumes:
       - ./resources/config/redis.conf:/usr/local/etc/redis/redis.conf
-    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf", "--port", "7003" ]
+    ports:
+      - "7003:7003"
 
   redis-replica-1:
     image: redis/redis-stack-server:7.2.0-v6
     volumes:
       - ./resources/config/redis.conf:/usr/local/etc/redis/redis.conf
-    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf", "--port", "7004" ]
+    ports:
+      - "7004:7004"
 
   redis-replica-2:
     image: redis/redis-stack-server:7.2.0-v6
     volumes:
       - ./resources/config/redis.conf:/usr/local/etc/redis/redis.conf
-    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf", "--port", "7005" ]
+    ports:
+      - "7005:7005"
 
   redis-replica-3:
     image: redis/redis-stack-server:7.2.0-v6
     volumes:
       - ./resources/config/redis.conf:/usr/local/etc/redis/redis.conf
-    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf", "--port", "7006" ]
+    ports:
+      - "7006:7006"
 
   redis-cluster-create:
     image: redis/redis-stack-server:7.2.0-v6
@@ -48,7 +60,7 @@ services:
       - redis-replica-3
     command: [
         "/bin/bash", "-c",
-        "echo yes | redis-cli --cluster-replicas 1 --cluster create redis-main-1:6379 redis-main-2:6379 redis-main-3:6379 redis-replica-1:6379 redis-replica-2:6379 redis-replica-3:6379"
+        "echo yes | redis-cli --cluster-replicas 1 --cluster create redis-main-1:7001 redis-main-2:7002 redis-main-3:7003 redis-replica-1:7004 redis-replica-2:7005 redis-replica-3:7006"
     ]
 
   redis-commander:
@@ -56,7 +68,7 @@ services:
     depends_on:
       - redis-cluster-create
     environment:
-      REDIS_HOSTS: local:redis-main-1:6379,local:redis-main-2:6379,local:redis-main-3:6379,local:redis-replica-1:6379,local:redis-replica-2:6379,local:redis-replica-3:6379
+      REDIS_HOSTS: local:redis-main-1:7001,local:redis-main-2:7002,local:redis-main-3:7003,local:redis-replica-1:7004,local:redis-replica-2:7005,local:redis-replica-3:7006
       STANDALONE: "true"
     ports:
       - "8085:8081"
@@ -75,7 +87,7 @@ services:
           \"seedNodes\": [
             {
               \"host\": \"redis-main-1\",
-              \"port\": 6379
+              \"port\": 7001
             }
           ]
         }'"
