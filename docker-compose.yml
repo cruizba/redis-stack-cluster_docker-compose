@@ -1,57 +1,94 @@
 version: '3.8'
 
 services:
+
   redis-main-1:
     build:
       dockerfile: Dockerfile
-    volumes:
-      - ./resources/config/redis.conf:/usr/local/etc/redis/redis.conf
-    command: [ "redis-server", "/usr/local/etc/redis/redis.conf", "--port", "7001" ]
+    environment:
+      REDIS_ARGS: >
+        --port 7001
+        --bind 0.0.0.0
+        --cluster-config-file nodes.conf
+        --cluster-enabled yes
+        --cluster-node-timeout 5000
+        --appendonly yes
+        --protected-mode no
     ports:
       - "7001:7001"
 
   redis-main-2:
     build:
       dockerfile: Dockerfile
-    volumes:
-      - ./resources/config/redis.conf:/usr/local/etc/redis/redis.conf
-    command: [ "redis-server", "/usr/local/etc/redis/redis.conf", "--port", "7002" ]
+    environment:
+      REDIS_ARGS: >
+        --port 7002
+        --bind 0.0.0.0
+        --cluster-config-file nodes.conf
+        --cluster-enabled yes
+        --cluster-node-timeout 5000
+        --appendonly yes
+        --protected-mode no
     ports:
       - "7002:7002"
 
   redis-main-3:
     build:
       dockerfile: Dockerfile
-    volumes:
-      - ./resources/config/redis.conf:/usr/local/etc/redis/redis.conf
-    command: [ "redis-server", "/usr/local/etc/redis/redis.conf", "--port", "7003" ]
+    environment:
+      REDIS_ARGS: >
+        --port 7003
+        --bind 0.0.0.0
+        --cluster-config-file nodes.conf
+        --cluster-enabled yes
+        --cluster-node-timeout 5000
+        --appendonly yes
+        --protected-mode no
     ports:
       - "7003:7003"
 
   redis-replica-1:
     build:
       dockerfile: Dockerfile
-    volumes:
-      - ./resources/config/redis.conf:/usr/local/etc/redis/redis.conf
-    command: [ "redis-server", "/usr/local/etc/redis/redis.conf", "--port", "7004" ]
+    environment:
+      REDIS_ARGS: >
+        --port 7004
+        --bind 0.0.0.0
+        --cluster-config-file nodes.conf
+        --cluster-enabled yes
+        --cluster-node-timeout 5000
+        --appendonly yes
+        --protected-mode no
     ports:
       - "7004:7004"
 
   redis-replica-2:
     build:
       dockerfile: Dockerfile
-    volumes:
-      - ./resources/config/redis.conf:/usr/local/etc/redis/redis.conf
-    command: [ "redis-server", "/usr/local/etc/redis/redis.conf", "--port", "7005" ]
+    environment:
+      REDIS_ARGS: >
+        --port 7005
+        --bind 0.0.0.0
+        --cluster-config-file nodes.conf
+        --cluster-enabled yes
+        --cluster-node-timeout 5000
+        --appendonly yes
+        --protected-mode no
     ports:
       - "7005:7005"
 
   redis-replica-3:
     build:
       dockerfile: Dockerfile
-    volumes:
-      - ./resources/config/redis.conf:/usr/local/etc/redis/redis.conf
-    command: [ "redis-server", "/usr/local/etc/redis/redis.conf", "--port", "7006" ]
+    environment:
+      REDIS_ARGS: >
+        --port 7006
+        --bind 0.0.0.0
+        --cluster-config-file nodes.conf
+        --cluster-enabled yes
+        --cluster-node-timeout 5000
+        --appendonly yes
+        --protected-mode no
     ports:
       - "7006:7006"
 
