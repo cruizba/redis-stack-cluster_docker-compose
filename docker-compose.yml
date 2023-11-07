@@ -6,6 +6,7 @@ services:
     build:
       dockerfile: Dockerfile
     environment:
+      REDIS_STACK_DATABASE_PORT: 7001
       REDIS_ARGS: >
         --port 7001
         --bind 0.0.0.0
@@ -16,6 +17,7 @@ services:
         --protected-mode no
     ports:
       - "7001:7001"
+      - "8001:8001"
 
   redis-main-2:
     build:
@@ -116,31 +118,3 @@ services:
       STANDALONE: "true"
     ports:
       - "8085:8081"
-
-  redisinsight-config:
-    image: ellerbrock/alpine-bash-curl-ssl
-    entrypoint: [ ]
-    command: [
-        "/bin/bash", "-c",
-        "sleep 20 &&\
-        curl --location --request POST 'redisinsight:8001/api/instance/' \
-        --header 'Content-Type: application/json' \
-                                  --data-raw '{
-          \"name\": \"CLUSTER-LOCAL\",
-          \"connectionType\": \"CLUSTER\",
-          \"seedNodes\": [
-            {
-              \"host\": \"redis-main-1\",
-              \"port\": 7001
-            }
-          ]
-        }'"
-    ]
-
-  redisinsight:
-    image: redislabs/redisinsight
-    depends_on:
-      - redis-cluster-create
-      - redisinsight-config
-    ports:
-      - "8083:8001"

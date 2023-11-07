@@ -1,6 +1,6 @@
 
 # Versions
-ARG REDIS_STACK_IMAGE=redis/redis-stack-server:7.2.0-v6
+ARG REDIS_STACK_IMAGE=redis/redis-stack:7.2.0-v6
 
 # --------
 # Builder
