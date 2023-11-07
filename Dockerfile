@@ -26,7 +26,7 @@ RUN git clone https://github.com/RediSearch/RediSearch.git && \
     make COORD=1
 
 # --------
-# Redis Stack patch
+# Redis Stack patch for use coord
 # --------
 FROM $REDIS_STACK_IMAGE
 
