@@ -17,7 +17,6 @@ services:
         --protected-mode no
     ports:
       - "7001:7001"
-      - "8001:8001"
 
   redis-main-2:
     build:
@@ -118,3 +117,26 @@ services:
       STANDALONE: "true"
     ports:
       - "8085:8081"
+
+  redis-insight:
+    image: oblakstudio/redisinsight:latest
+    ports:
+      - "8001:5000"
+
+  redisinsight-config:
+    image: ellerbrock/alpine-bash-curl-ssl
+    entrypoint: [ ]
+    command: [
+        "/bin/bash", "-c",
+        "sleep 20 &&\
+        curl --location --request POST 'redis-insight:5000/api/databases/' \
+        --header 'Content-Type: application/json' \
+                                  --data-raw '{
+          \"name\": \"redis-cluster\",
+          \"host\": \"redis-main-1\",
+          \"port\": 7001,
+          \"db\": 0,
+          \"compressor\": \"NONE\",
+          \"timeout\": 30000
+        }'"
+    ]
