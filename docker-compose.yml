@@ -2,7 +2,8 @@ version: '3.8'
 
 services:
   redis-main-1:
-    image: redis/redis-stack-server:7.2.0-v6
+    build:
+      dockerfile: Dockerfile
     volumes:
       - ./resources/config/redis.conf:/usr/local/etc/redis/redis.conf
     command: [ "redis-server", "/usr/local/etc/redis/redis.conf", "--port", "7001" ]
@@ -10,7 +11,8 @@ services:
       - "7001:7001"
 
   redis-main-2:
-    image: redis/redis-stack-server:7.2.0-v6
+    build:
+      dockerfile: Dockerfile
     volumes:
       - ./resources/config/redis.conf:/usr/local/etc/redis/redis.conf
     command: [ "redis-server", "/usr/local/etc/redis/redis.conf", "--port", "7002" ]
@@ -18,7 +20,8 @@ services:
       - "7002:7002"
 
   redis-main-3:
-    image: redis/redis-stack-server:7.2.0-v6
+    build:
+      dockerfile: Dockerfile
     volumes:
       - ./resources/config/redis.conf:/usr/local/etc/redis/redis.conf
     command: [ "redis-server", "/usr/local/etc/redis/redis.conf", "--port", "7003" ]
@@ -26,7 +29,8 @@ services:
       - "7003:7003"
 
   redis-replica-1:
-    image: redis/redis-stack-server:7.2.0-v6
+    build:
+      dockerfile: Dockerfile
     volumes:
       - ./resources/config/redis.conf:/usr/local/etc/redis/redis.conf
     command: [ "redis-server", "/usr/local/etc/redis/redis.conf", "--port", "7004" ]
@@ -34,7 +38,8 @@ services:
       - "7004:7004"
 
   redis-replica-2:
-    image: redis/redis-stack-server:7.2.0-v6
+    build:
+      dockerfile: Dockerfile
     volumes:
       - ./resources/config/redis.conf:/usr/local/etc/redis/redis.conf
     command: [ "redis-server", "/usr/local/etc/redis/redis.conf", "--port", "7005" ]
@@ -42,7 +47,8 @@ services:
       - "7005:7005"
 
   redis-replica-3:
-    image: redis/redis-stack-server:7.2.0-v6
+    build:
+      dockerfile: Dockerfile
     volumes:
       - ./resources/config/redis.conf:/usr/local/etc/redis/redis.conf
     command: [ "redis-server", "/usr/local/etc/redis/redis.conf", "--port", "7006" ]
@@ -50,7 +56,8 @@ services:
       - "7006:7006"
 
   redis-cluster-create:
-    image: redis/redis-stack-server:7.2.0-v6
+    build:
+      dockerfile: Dockerfile
     depends_on:
       - redis-main-1
       - redis-main-2
