@@ -1,5 +1,5 @@
 
-# Versions
+# Redis Stack version
 ARG REDIS_STACK_IMAGE=redis/redis-stack:7.2.0-v6
 
 # --------
@@ -8,10 +8,11 @@ ARG REDIS_STACK_IMAGE=redis/redis-stack:7.2.0-v6
 FROM ubuntu:22.04 as coord-build
 
 ARG VERSION=v2.8.9
+
 # Install dependencies
 RUN apt-get update && apt-get install git python3 python3-pip -y
 
-# Build Redisearch
+# Redis Search version with coord
 RUN git clone https://github.com/RediSearch/RediSearch.git && \
     cd RediSearch && \
     git checkout "${VERSION}" && \
